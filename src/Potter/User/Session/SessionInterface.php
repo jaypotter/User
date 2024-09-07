@@ -11,4 +11,6 @@ interface SessionInterface extends TableAwareInterface
     public function getSessionId(): string;
     public function getSessionName(): string;
     public function startSession(): void;
+    
+    public function createTableIfNotExists(): void;
 }

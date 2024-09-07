@@ -15,8 +15,13 @@ final class Session extends AbstractSession
     
     public function __construct(?string $sessionName = null)
     {
-        if (!is_null($name)) {
+        if (!is_null($sessionName)) {
             $this->setSessionName($sessionName);
         }
+        $this->startSession();
+        if (!$this->hasTable()) {
+            return;
+        }
+        $this->createTableIfNotExists();
     }
 }

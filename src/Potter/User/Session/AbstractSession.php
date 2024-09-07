@@ -13,4 +13,6 @@ abstract class AbstractSession extends AbstractTableAware implements SessionInte
     abstract public function getSessionName(): string;
     abstract protected function setSessionName(string $sessionName): string;
     abstract public function startSession(): void;
+    
+    abstract public function createTableIfNotExists(): void;
 }

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Potter\User\Session;
 
+use Potter\Database\Table\TableInterface;
+use Potter\Database\Column\Column;
+
 trait SessionTrait 
 {
     final public function getSessionId(): string
@@ -30,4 +33,14 @@ trait SessionTrait
     {
         session_start();
     }
+    
+    final public function createTableIfNotExists(): void
+    {
+        $this->getTable()->createTableIfNotExists(
+            new Column('Common_Id', 'int', notNull: true),
+            new Column('Session_Name', 'varchar(255)', notNull: true)
+        );
+    }
+    
+    abstract public function getTable(): TableInterface;
 }
