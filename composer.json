@@ -9,7 +9,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Potter\\User\\": "src/Potter/User/"
+            "Potter\\User\\Session\\": "src/Potter/User/Session/"
         }
     },
     "authors": [
