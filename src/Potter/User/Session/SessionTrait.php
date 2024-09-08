@@ -31,6 +31,9 @@ trait SessionTrait
     
     final public function startSession(): void
     {
+        if ($this->hasTable()) {
+            $this->createTableIfNotExists();
+        }
         session_start();
     }
     
@@ -43,4 +46,5 @@ trait SessionTrait
     }
     
     abstract public function getTable(): TableInterface;
+    abstract public function hasTable(): bool;
 }
