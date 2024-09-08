@@ -19,11 +19,7 @@ final class Session extends AbstractSession
         if (!is_null($sessionName)) {
             $this->setSessionName($sessionName);
         }
-        $this->startSession();
         $this->setTable($table);
-        if (!$this->hasTable()) {
-            return;
-        }
-        $this->createTableIfNotExists();
+        $this->startSession();
     }
 }
