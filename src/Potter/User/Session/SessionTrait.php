@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Potter\User\Session;
 
-use Potter\Database\Table\TableInterface;
 use Potter\Database\Column\Column;
+use Potter\Database\Table\TableInterface;
 
 trait SessionTrait 
 {
@@ -31,17 +31,25 @@ trait SessionTrait
     
     final public function startSession(): void
     {
-        if ($this->hasTable()) {
-            $this->createTableIfNotExists();
-        }
         session_start();
+        if (!$this->hasTable()) {
+            return;
+        }
+        $this->createTableIfNotExists();
+        $sessionTable = $this->getTable();
+        $database = $sessionTable->getTable()->getDatabase();
+        $database->getCommonTable()->getTable()->insertRecord([]);
+        $sessionCommonId = $database->getLastInsertId();
+        $sessionTable->insertRecord([
+            'Common_Id' => $sessionCommonId,
+            'Session_Id' => $this->getSessionId()]);
     }
     
     final public function createTableIfNotExists(): void
     {
         $this->getTable()->createTableIfNotExists(
             new Column('Common_Id', 'int', notNull: true),
-            new Column('Session_Name', 'varchar(255)', notNull: true)
+            new Column('Session_Id', 'varchar(255)', notNull: true)
         );
     }
     
