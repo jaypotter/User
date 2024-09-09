@@ -37,7 +37,7 @@ trait SessionTrait
         }
         $this->createTableIfNotExists();
         $sessionTable = $this->getTable();
-        $database = $sessionTable->getTable()->getDatabase();
+        $database = $sessionTable->getDatabase();
         $database->getCommonTable()->getTable()->insertRecord([]);
         $sessionCommonId = $database->getLastInsertId();
         $sessionTable->insertRecord([
