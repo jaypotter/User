@@ -48,7 +48,7 @@ trait SessionTrait
     final public function createTableIfNotExists(): void
     {
         $this->getTable()->createTableIfNotExists(
-            new Column('Common_Id', 'int', notNull: true),
+            new Column('Common_Id', 'int', primaryKey: true),
             new Column('Session_Id', 'varchar(255)', notNull: true)
         );
     }
