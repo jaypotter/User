@@ -32,14 +32,14 @@ trait SessionTrait
     
     final public function startSession(): void
     {
-        $userAgent = new UserAgent;
+        $this->createTableIfNotExists();
+        $sessionTable = $this->getTable();
+        $database = $sessionTable->getDatabase();
+        $userAgent = new UserAgent($database->getTable('UserAgents'));
         $userAgentId = $userAgent->getCommonId();
         if (!$this->hasTable()) {
             return;
         }
-        $this->createTableIfNotExists();
-        $sessionTable = $this->getTable();
-        $database = $sessionTable->getDatabase();
         session_start();
         $sessionId = $this->getSessionId();
         $result = $sessionTable->getRecords(['Session_Id' => $sessionId, 'User_Agent' => $userAgentId])->toArray();
