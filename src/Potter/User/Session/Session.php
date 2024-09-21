@@ -16,7 +16,6 @@ final class Session extends AbstractSession
     
     public function __construct(?string $sessionName = null, ?TableInterface $table = null)
     {
-        session_start();
         if (!is_null($sessionName)) {
             $this->setSessionName($sessionName);
         }

@@ -32,6 +32,7 @@ trait SessionTrait
     
     final public function startSession(): void
     {
+        session_start();
         $this->createTableIfNotExists();
         $sessionTable = $this->getTable();
         $database = $sessionTable->getDatabase();
