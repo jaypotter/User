@@ -18,6 +18,9 @@ trait UserIPAddressTrait
     
     final public function initialize(?int $sessionId = null): void
     {
+        if (!array_key_exists('REMOTE_ADDR', $_SESSION)) {
+            return;
+        }
         $userIP = $_SERVER['REMOTE_ADDR'];
         if (!$this->hasTable() || is_null($sessionId)) {
             return;
