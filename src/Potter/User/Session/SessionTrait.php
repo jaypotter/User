@@ -66,11 +66,11 @@ trait SessionTrait
                 'User_Agent' => $userAgentId]);
         } else {
             $this->commonId = $result[0]['Common_Id'];
-            new UserIPAddress($this->commonId, $database->getTable('UserIPAddresses'));
             $lastSeen = date("Y-m-d H:i:s");
                 $sessionTable->updateRecords(['Last_Seen' => $lastSeen], ['Session_Id' => $sessionId]);
                 return;
         }
+        new UserIPAddress($this->commonId, $database->getTable('UserIPAddresses'));
     }
 
     abstract public function getTable(): TableInterface;
