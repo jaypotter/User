@@ -68,7 +68,6 @@ trait SessionTrait
             $this->commonId = $result[0]['Common_Id'];
             $lastSeen = date("Y-m-d H:i:s");
                 $sessionTable->updateRecords(['Last_Seen' => $lastSeen], ['Session_Id' => $sessionId]);
-                return;
         }
         new UserIPAddress($this->commonId, $database->getTable('UserIPAddresses'));
     }
