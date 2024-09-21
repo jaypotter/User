@@ -36,11 +36,16 @@ trait UserAgentTrait
         $this->createTableIfNotExists();
         $userAgentTable = $this->getTable();
         $database = $userAgentTable->getDatabase();
-        $database->getCommonTable()->getTable()->insertRecord([]);
-        $userAgentCommonId = $database->getLastInsertId();
-        $userAgentTable->insertRecord([
-            'Common_Id' => $userAgentCommonId,
-            'User_Agent' => $this->getUserAgent()]);
+        $userAgent = $this->getUserAgent();
+        $result = $userAgentTable->getRecords(['User_Agent' => $userAgent])->toArray();
+        if (empty($result)) {
+             $database->getCommonTable()->getTable()->insertRecord([]);
+            $userAgentCommonId = $database->getLastInsertId();
+            $userAgentTable->insertRecord([
+                'Common_Id' => $userAgentCommonId,
+                'User_Agent' => $userAgent]);
+            return;
+        }
     }
     
     final public function isConsoleUser(): bool
