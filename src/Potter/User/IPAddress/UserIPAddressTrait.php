@@ -14,7 +14,6 @@ trait UserIPAddressTrait
     final public function createTableIfNotExists(): void
     {
         $this->getTable()->createTableIfNotExists(
-            new Column('Common_Id', 'int', primaryKey: true),
             new Column('IP_Address', 'varchar(255)', notNull: true),
             new Column('Session', 'int', notNull: true));
     }
