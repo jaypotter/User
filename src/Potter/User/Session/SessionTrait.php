@@ -41,6 +41,8 @@ trait SessionTrait
         $sessionId = $this->getSessionId();
         $result = $sessionTable->getRecords(['Session_Id' => $sessionId])->toArray();
         if (!empty($result)) {
+            $lastSeen = date("Y-m-d H:i:s");
+            $sessionTable->updateRecords(['Session_Id' => $sessionId], ['Last_Seen' => $lastSeen]);
             return;
         }
         $database->getCommonTable()->getTable()->insertRecord([]);
