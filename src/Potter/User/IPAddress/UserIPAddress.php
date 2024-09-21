@@ -12,8 +12,9 @@ final class UserIPAddress extends AbstractUserIPAddress
 {
     use AwareTrait, TableAwareTrait, UserIPAddressTrait;
     
-    public function __construct(int $sessionId, ?TableInterface $table = null)
+    public function __construct(?int $sessionId = null, ?TableInterface $table = null)
     {
-        
+        $this->setTable($table);
+        $this->initialize($sessionId);
     }
 }
