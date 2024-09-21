@@ -40,7 +40,6 @@ trait SessionTrait
         if (!$this->hasTable()) {
             return;
         }
-        session_start();
         $sessionId = $this->getSessionId();
         $result = $sessionTable->getRecords(['Session_Id' => $sessionId, 'User_Agent' => $userAgentId])->toArray();
         if (!empty($result)) {
