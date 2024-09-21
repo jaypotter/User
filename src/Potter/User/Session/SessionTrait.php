@@ -6,6 +6,7 @@ namespace Potter\User\Session;
 
 use Potter\Database\Column\Column;
 use Potter\Database\Table\TableInterface;
+use Potter\User\Agent\UserAgent;
 
 trait SessionTrait 
 {
@@ -31,15 +32,17 @@ trait SessionTrait
     
     final public function startSession(): void
     {
-        session_start();
+        $userAgent = new UserAgent;
+        $userAgentId = $userAgent->getCommonId();
         if (!$this->hasTable()) {
             return;
         }
         $this->createTableIfNotExists();
         $sessionTable = $this->getTable();
         $database = $sessionTable->getDatabase();
+        session_start();
         $sessionId = $this->getSessionId();
-        $result = $sessionTable->getRecords(['Session_Id' => $sessionId])->toArray();
+        $result = $sessionTable->getRecords(['Session_Id' => $sessionId, 'User_Agent' => $userAgentId])->toArray();
         if (!empty($result)) {
             $lastSeen = date("Y-m-d H:i:s");
             $sessionTable->updateRecords(['Last_Seen' => $lastSeen], ['Session_Id' => $sessionId]);
@@ -49,7 +52,8 @@ trait SessionTrait
         $sessionCommonId = $database->getLastInsertId();
         $sessionTable->insertRecord([
             'Common_Id' => $sessionCommonId,
-            'Session_Id' => $sessionId]);
+            'Session_Id' => $sessionId,
+            'User_Agent' => $userAgentId]);
     }
     
     final public function createTableIfNotExists(): void
@@ -57,6 +61,7 @@ trait SessionTrait
         $this->getTable()->createTableIfNotExists(
             new Column('Common_Id', 'int', primaryKey: true),
             new Column('Session_Id', 'varchar(255)', notNull: true),
+            new Column('User_Agent', int, notNull: true),
             new Column('Last_Seen', 'timestamp', notNull: true, columnDefault: 'CURRENT_TIMESTAMP')
         );
     }
