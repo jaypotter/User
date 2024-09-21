@@ -38,11 +38,16 @@ trait SessionTrait
         $this->createTableIfNotExists();
         $sessionTable = $this->getTable();
         $database = $sessionTable->getDatabase();
+        $sessionId = $this->getSessionId();
+        $result = $sessionTable->getRecords(['Session_Id' => $sessionId])->toArray();
+        if (!empty($result)) {
+            return;
+        }
         $database->getCommonTable()->getTable()->insertRecord([]);
         $sessionCommonId = $database->getLastInsertId();
         $sessionTable->insertRecord([
             'Common_Id' => $sessionCommonId,
-            'Session_Id' => $this->getSessionId()]);
+            'Session_Id' => $sessionId]);
     }
     
     final public function createTableIfNotExists(): void
