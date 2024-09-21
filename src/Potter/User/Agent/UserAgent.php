@@ -15,6 +15,6 @@ final class UserAgent extends AbstractUserAgent
     public function __construct(?TableInterface $table = null)
     {
         $this->setTable($table);
-        $this->initiate();
+        $this->initialize();
     }
 }

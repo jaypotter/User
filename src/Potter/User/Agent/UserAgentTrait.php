@@ -35,7 +35,7 @@ trait UserAgentTrait
         return $this->isConsoleUser() ? $this->getServerAPI() : $_SERVER['HTTP_USER_AGENT'];
     }
     
-    final public function initiate(): void
+    final public function initialize(): void
     {
         if (!$this->hasTable()) {
             return;

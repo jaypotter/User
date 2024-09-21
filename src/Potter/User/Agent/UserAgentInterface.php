@@ -12,6 +12,6 @@ interface UserAgentInterface extends TableAwareInterface
     public function getCommonId(): int;
     public function getServerAPI(): string;
     public function getUserAgent(): string;
-    public function initiate(): void;
+    public function initialize(): void;
     public function isConsoleUser(): bool;
 }

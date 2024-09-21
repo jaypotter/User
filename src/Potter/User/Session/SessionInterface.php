@@ -8,9 +8,8 @@ use Potter\Database\Table\Aware\TableAwareInterface;
 
 interface SessionInterface extends TableAwareInterface
 {
+    public function createTableIfNotExists(): void;
     public function getSessionId(): string;
     public function getSessionName(): string;
     public function startSession(): void;
-    
-    public function createTableIfNotExists(): void;
 }
