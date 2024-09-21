@@ -54,7 +54,8 @@ trait SessionTrait
     {
         $this->getTable()->createTableIfNotExists(
             new Column('Common_Id', 'int', primaryKey: true),
-            new Column('Session_Id', 'varchar(255)', notNull: true)
+            new Column('Session_Id', 'varchar(255)', notNull: true),
+            new Column('Last_Seen', 'timestamp', notNull: true, columnDefault: 'CURRENT_TIMESTAMP')
         );
     }
     
